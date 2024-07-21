@@ -28,3 +28,23 @@ if cnt.count(Max) > 1:
 else:
     Max_index = cnt.index(Max)
     print(word_list[Max_index])
+    
+# 1316. 그룹 단어 체커
+n = int(input())
+cnt = n  # 그룹 단어의 수 n으로 할당
+
+for _ in range(n):
+    word = input()
+    
+    for i in range(len(word)-1):
+        if word[i] == word[i+1]:  # 앞뒤 글자가 같다면 continue
+            continue
+        
+        elif word[i] in word[i+2:]:  # 앞글자가 뒤에 다시 나온다면,
+            cnt -= 1                 # 그룹 단어가 아니므로 -1
+            break
+        
+print(cnt)
+
+    
+    
