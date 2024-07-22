@@ -7,6 +7,7 @@ r`-_   ,\'  ,/
       |
       |''')
 
+
 # 3003. 킹, 퀸, 룩, 비숍, 나이트, 폰
 pieces = [1, 1, 2, 2, 2, 8]
 found = list(map(int, input().split()))
@@ -25,6 +26,7 @@ n = len(pieces)
 for i in range(n):
     print(pieces[i]-found[i], end=' ')
 
+
 # 2444. 별 찍기 - 7
 n = int(input())
 for i in range(1, n+1):
@@ -32,12 +34,14 @@ for i in range(1, n+1):
 for j in range(n-1, 0, -1):
     print(' '*(n-j) + '*'*(2*j-1))
 
+
 # 10988. 팰린드롬인지 확인하기
 word = input()
 if word == word[::-1] :
     print('1')
 else :
     print('0')
+
 
 # 1157. 단어 공부
 word = input().upper()
@@ -55,6 +59,7 @@ else:
     Max_index = cnt.index(Max)
     print(word_list[Max_index])
 
+
 # 2941. 크로아티아 알파벳
 croatia = ['c=', 'c-', 'dz=', 'd-', 'lj', 'nj', 's=', 'z=']
 alphabet = input()
@@ -64,6 +69,7 @@ for i in croatia:
     
 print(len(alphabet))
     
+
 # 1316. 그룹 단어 체커
 n = int(input())
 cnt = n  # 그룹 단어의 수 n으로 할당
@@ -81,5 +87,26 @@ for _ in range(n):
         
 print(cnt)
 
+
+# 25206. 너의 평점은
+criteria = {'A+':4.5, 'A0':4.0, 'B+':3.5, 'B0':3.0, 'C+':2.5, 'C0':2.0, 'D+':1.5, 'D0':1.0, 'F':0.0}
+score_sum = 0
+credit_sum = 0
+
+for score in range(20):
+    score_lst = input().split()
+    
+    if score_lst[-1] == 'P':
+        continue
+    
+    else:
+        ans = float(score_lst[1])*criteria[score_lst[-1]]
+        score_sum += ans
+        credit_sum += float(score_lst[1])
+        
+Avg = score_sum/credit_sum
+print(Avg)
+        
+        
     
     
