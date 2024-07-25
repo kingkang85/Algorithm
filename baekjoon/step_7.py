@@ -10,6 +10,7 @@ for i in range(n):
         print(sum, end=' ')
     print()
 
+
 # 2566. 최댓값
 arr = [list(map(int, input().split())) for _ in range(9)]
 Max, row, col = arr[0][0], 0, 0  # Max의 초기값을 배열의 1행 1열 값으로 설정
@@ -21,5 +22,3 @@ for i in range(9):
 
 print(Max)
 print(row, col)
-
-
