@@ -34,22 +34,36 @@ for i in range(t) :
 
 
 ####### 다른 풀이 #######
-def rotation(arr, n) :
-    new_arr = [[0]*n for _ in range(n)] # nxn 빈 행렬
-    for i in range(n) :
-        for j in range(n) :
-            new_arr[i][j] = arr[n-j-1][i]
-    return new_arr
+# 1961. 숫자 배열 회전
+def rotation(array, n):  # 90도 회전하는 함수
+    result = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            result[i][j] = array[n-1-j][i] 
+    return result
 
-t = int(input())
-for k in range(1, t+1) :
-    n = int(input())
-    arr = list(input().split() for _ in range(n))
+
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    arr = [input().split() for _ in range(N)]
+
+    arr90 = rotation(arr, N)  # 90도 회전
+    arr180 = rotation(arr90, N)  # 180도 회전
+    arr270 = rotation(arr180, N)  # 270도 회전
+
+    # print(arr90)
+    # print(arr180)
+    # print(arr270)
+    # [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
+    # [[9, 8, 7], [6, 5, 4], [3, 2, 1]]
+    # [[3, 6, 9], [2, 5, 8], [1, 4, 7]]     
     
-    arr90 = rotation(arr, n)
-    arr180 = rotation(arr90, n)
-    arr270 = rotation(arr180, n)
-    
-    print('#%d' %k)
-    for i,j,k in zip(arr90, arr180, arr270) :
+    # join은 문자열 메서드 !!!
+    # TypeError: sequence item 0: expected str instance, int found
+    # for i, j, k in zip(arr90, arr180, arr270):
+    #     print(f"{''.join(i)} {''.join(j)} {''.join(k)}")
+
+    print(f'#{tc}')
+    for i, j, k in zip(arr90, arr180, arr270):
         print(f"{''.join(i)} {''.join(j)} {''.join(k)}")
