@@ -1,11 +1,13 @@
 # 10163. 색종이
 N = int(input())
 
-arr = [[0] * 18 for _ in range(18)]
 
+idx_lst = []
 for i in range(1, N+1):
     r1, c1, r2, c2 = map(int, input().split())
-    arr[r1:r1+r2, c1:c1+c2]
+    idx_lst.append([r1, r1+r2, c1, c1+c2])
+Max = max(idx_lst)
+arr = [[0]*]
 
 for j in range(1, N+1):
     cnt = 0
