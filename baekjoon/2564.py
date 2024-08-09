@@ -17,11 +17,12 @@ for s in st:
             result += s[1] - my_dist
 
     elif my_k - s[0] == 1 or my_k - s[0] == -1:
-        ans1 = my_dist + s[1] + height
-        ans2 = 2 * width - my_dist - s[1] + height
-        result += min(ans1, ans2)
+        if s[0] == 1 or s[0] == 2:
+            ans1 = my_dist + s[1] + height
+            ans2 = 2 * width - my_dist - s[1] + height
+            result += min(ans1, ans2)
 
-    else:
-        pass
-
+    elif my_k - s[0] == 2 or my_k - s[0] == -2:
+        my_dist + height - s[1]
+        height + s[1] - my_dist
 print(result)
