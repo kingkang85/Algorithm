@@ -1,3 +1,4 @@
+# 2578. 빙고
 def Bingo(check):
     bingo_cnt = 0
     for i in range(5):
