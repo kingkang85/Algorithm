@@ -5,16 +5,15 @@ for tc in range(1, T+1):
     clap = info[0]
     need = 0
 
-    for j in range(1, len(info)):
-        if info[j] == 0:
+    for i in range(1, len(info)):
+        if info[i] == 0:
             continue
 
-        else:
-            if j == clap:
-                clap += info[j]
+        if i <= clap:
+            clap += info[i]
 
-            else:
-                need += (j - clap)
-                clap += need + info[j]
+        else:
+            need += i - clap
+            clap += i - clap + info[i]
 
     print(f'#{tc} {need}')
