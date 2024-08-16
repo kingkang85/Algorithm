@@ -2,27 +2,25 @@
 width, height = map(int, input().split())
 stores = int(input())
 st = []
-for _ in range(stores):
+for _ in range(stores+1):
     st.append(list(map(int, input().split())))  # k 방향, dist 거리
 
-my_k, my_dist = map(int, input().split())  # my_k 동근이의 방향, my_dist 동근이의 거리
-
-result = 0
+result = []
 for s in st:
+    if s[0] == 3:
+        result.append(s[1])
 
-    if my_k - s[0] == 0:
-        if my_dist >= s[1]:
-            result += my_dist - s[1]
-        else:
-            result += s[1] - my_dist
+    elif s[0] == 2:
+        result.append(height + s[1])
 
-    elif my_k - s[0] == 1 or my_k - s[0] == -1:
-        if s[0] == 1 or s[0] == 2:
-            ans1 = my_dist + s[1] + height
-            ans2 = 2 * width - my_dist - s[1] + height
-            result += min(ans1, ans2)
+    elif s[0] == 4:
+        result.append(2*height+width-s[1])
 
-    elif my_k - s[0] == 2 or my_k - s[0] == -2:
-        my_dist + height - s[1]
-        height + s[1] - my_dist
-print(result)
+    else:
+        result.append(2*height+2*width-s[1])
+
+sumV = 0
+for dist in result[:stores]:
+    minV = min(abs(result[stores] - dist), abs(2*height+2*width + result[stores] - dist))
+    sumV += minV
+print(sumV)
