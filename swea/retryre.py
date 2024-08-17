@@ -9,7 +9,7 @@ def check():
         total += 1 
 
         for j in range(N-1):
-            if ground[j][i] < ground[j][i-q]:
+            # if ground[j][i] < ground[j][i-]:
                 pass        
 
 
@@ -18,3 +18,4 @@ for tc in range(1, T+1):
     N, X = map(int, input().split())
 
     ground = [list(map(int, input().split())) for _ in range(N)]
+  
