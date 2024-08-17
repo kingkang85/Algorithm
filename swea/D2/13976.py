@@ -1,41 +1,35 @@
 # 13976. 기지국
-def check():
+# 주변에 기지국이 있으면 False, 없으면 True 리턴
+def Check(i, j, di, dj):
+    check = {1: ['A', 'B', 'C'], 2: ['B', 'C'], 3: ['C']}
     
-    for i in range(n):
-        for j in range(n):
-            di = [1, 0, -1, 0]
-            dj = [0, 1, 0, -1]
+    for dist, wifi in check.items():
+        ni = i + di * dist
+        nj = j + dj * dist
 
-            if arr[i][j] == 'X':
-                continue
-
-            elif arr[i][j] == 'A':
-                ni = i + di
-                nj = j + dj
-
-            elif arr[i][j] == 'B':
-                ni = i + di * 2
-                nj = j + dj * 2
-            
-            elif arr[i][j] == 'C':
-                ni = i + di * 3
-                nj = j + dj * 3
-
-            if 0 <= ni < n and 0 <= nj < n:
-                pass
-
-
-                
+        if 0 <= ni < n and 0 <= nj < n and arr[ni][nj] in wifi:
+            return False
+    
+    return True
+                        
 
 T = int(input())
 for tc in range(1, T+1):
     n = int(input())
     arr = [input() for _ in range(n)]
-    total = 0
-    for i in range(n):
-        total += arr[i].count('H')
     
-    print(total)
+    cnt = 0
+    di = [1, 0, -1, 0]
+    dj = [0, 1, 0, -1]
 
+    for i in range(n):
+        for j in range(n):
+            if arr[i][j] == 'H':
+                for k in range(4):
+                    if not Check(i, j, di[k], dj[k]):
+                        break
+                else:  # 모든 방향에 기지국이 없으면 cnt 1 증가
+                    cnt += 1
 
+    print(f'#{tc} {cnt}')
     

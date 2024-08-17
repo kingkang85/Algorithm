@@ -13,7 +13,8 @@ for tc in range(1, T+1):
             cnt -= 1
             if sticks[i-1] == '(':
                 total += cnt
-            else:
+
+            else:  # 맨 끝 막대기 추가
                 total += 1
 
     print(f'#{tc} {total}')
