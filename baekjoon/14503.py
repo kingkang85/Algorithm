@@ -7,26 +7,26 @@ def bfs(i, j, d):
     dq.append([i, j])
     visited[i][j] = 1
     
-    cnt = 0
-    while dq:
-        ti, tj = dq.popleft()
-        print(ti, tj)
-        cnt += 1
-        if room[ti][tj] == 1:
-            return cnt
-        
-        di = [-1, 0, 1, 0]
-        dj = [0, 1, 0, -1]
-        
-        ni = ti + di[d]
-        nj = tj + dj[d]
+    cnt = 1
+    di = [-1, 0, 1, 0]
+    dj = [0, 1, 0, -1]
+    while True:
+        ni = i + di[d]
+        nj = j + dj[d]
 
-        if 0 <= ti < N and 0 <= tj < M and room[ni][nj] == 0 and visited[ni][nj] == 0:
-            d = (d+1) % 4
+        if 0 <= ni < N and 0 <= nj < M and room[ni][nj] == 0 and visited[ni][nj] == 0:
             dq.append([ni, nj])
+            cnt += 1
+            d = (d+3) % 4
             visited[ni][nj] = 1
         
+        else:
+            if dq:
+                i, j = dq.popleft()
+                if room[i][j] == 1:
+                    return cnt
 
+        
 
 N, M = map(int, input().split())
 r, c, d = map(int, input().split())
