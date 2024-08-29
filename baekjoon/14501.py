@@ -5,4 +5,4 @@ for _ in range(N):
     T, P = map(int, input().split())
     sch.append((T, P))
 
-print(sch)
+
