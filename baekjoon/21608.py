@@ -8,13 +8,20 @@ def Shark(i, j):
     
 
 N = int(input())
-for _ in range(N*N):
-    arr = list(map(int, input().split()))
-    student = arr[0]
-    wish = arr[1:]
+arr = [list(map(int, input().split())) for _ in range(N*N)]
+room = [[0] * N for _ in range(N)]
 
-    room = [[0] * N for _ in range(N)]
+# for i in range(N):
+#     for j in range(N):
+#         for s in arr:
+#             student = s[0]
+#             wish = s[1:]
 
+empty = N*N
+for s in arr:
+    student = s[0]
+    wish = s[1:]
+    
     Max = 0
     for i in range(N):
         for j in range(N):
@@ -23,7 +30,18 @@ for _ in range(N*N):
             if Max < cnt:
                 Max = cnt
                 row, col = i, j
+                room[row][col] = student
+                empty -= 1
 
-    room[row][col] = student
-    print(room)
+    # Max = 0
+    # for i in range(N):
+    #     for j in range(N):
+    #         cnt = 0
+    #         Shark(i, j)
+    #         if Max < cnt:
+    #             Max = cnt
+    #             row, col = i, j
+
+    # room[row][col] = student
+    # print(room)
 
