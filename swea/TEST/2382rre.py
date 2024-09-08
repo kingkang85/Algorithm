@@ -15,16 +15,18 @@ import sys
 sys.stdin = open('input.txt', 'r')
 def Move(arr):
     tmp = [[-1] * N] + [[-1] + [0] * (N-2) + [-1] for _ in range(N-2)] + [[-1] * N]
-    d = [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]]
+    d = [0, [-1, 0], [1, 0], [0, -1], [0, 1]]
 
     for i in range(N):
         for j in range(N):
-            if arr[i][j] != -1 and arr[i][j]:
-                cnt, way = arr[i][j]
+            if arr[i][j] == -1 or arr[i][j] == 0:
+                continue
+            
+            cnt, way = arr[i][j]
+            ni = i + d[way][0]
+            nj = j + d[way][1]
 
-                ni = i + d[way][0]
-                nj = j + d[way][1]
-
+            if 0 <= ni < N and 0 <= nj < N:
                 if tmp[ni][nj] == -1:
                     cnt //= 2
                     if way in {1, 2}:
@@ -34,15 +36,16 @@ def Move(arr):
                     
                     if cnt == 0:
                         continue
-                    
+                
                 elif tmp[ni][nj]:
                     new_cnt, new_way = tmp[ni][nj]
                     if new_cnt > cnt:
-                        way = new_way
-                    cnt += new_cnt
+                        cnt, way = new_cnt + cnt, new_way
+                    else:
+                        cnt += new_cnt
 
                 tmp[ni][nj] = [cnt, way]
-    
+
     return tmp
                 
 
@@ -61,7 +64,8 @@ for tc in range(1, T+1):
     total = 0
     for i in range(N):
         for j in range(N):
-            if arr[i][j] != -1 and arr[i][j]:
-                total += arr[i][j][0]
+            if arr[i][j] == -1 or arr[i][j] == 0:
+                continue
+            total += arr[i][j][0]
 
     print(f'#{tc} {total}')
