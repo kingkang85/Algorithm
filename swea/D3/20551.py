@@ -20,4 +20,24 @@ def Candies():
 T = int(input())
 for tc in range(1, T+1):
     nums = list(map(int, input().split()))
-    print(f'#{tc} {Candies()}')  
+    print(f'#{tc} {Candies()}')
+
+############################################################################################
+T = int(input())
+for tc in range(1, T+1):
+    A, B, C = map(int, input().split())
+
+    if B < 2 or C < 3:
+        print(f'#{tc} -1')
+        continue
+
+    eat = 0
+    if B >= C:  # B와 C부터 비교
+        eat += B - (C - 1)
+        B = C - 1
+
+    if A >= B:
+        eat += A - (B - 1)
+        A = B - 1
+
+    print(f'#{tc} {eat}')
