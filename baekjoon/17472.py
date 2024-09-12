@@ -1,10 +1,11 @@
 # 17472. 다리 만들기 2
-from collections import deque
+from collections import deque, defaultdict
 # 섬 찾는 함수
 def FindIsland():
     global num
     q = deque()
     visited = [[0] * M for _ in range(N)]
+
     for i in range(N):
         for j in range(M):
             # 1이고 방문한 적 없는 곳에서 시작
@@ -13,6 +14,7 @@ def FindIsland():
                 arr[i][j] = num
                 q.append((i, j))
                 visited[i][j] = 1
+                island[num].append((i, j))
 
             while q:
                 i, j = q.popleft()
@@ -22,40 +24,65 @@ def FindIsland():
                         arr[ni][nj] = num  # 섬 번호 부여
                         q.append((ni, nj))
                         visited[ni][nj] = 1
+                        island[num].append((ni, nj))
+
 
 # 다리 건설하는 함수
 def Bridge():
-    island = set()
-    for _ in range(num):
-        for i in range(N):
-            for j in range(M):
+    for k, v in island.items():
+        for i, j in v:
+            r, c = i, j
+            for dr, dc in [[-1, 0], [0, 1], [1, 0], [0, -1]]:
                 cnt = 0
-                if arr[i][j] == num:
+                while True:
+                    nr, nc = r + dr, c + dc
+                    if nr < 0 or nr >= N or nc < 0 or nc >= M or arr[nr][nc] == k:
+                        break
 
+                    if arr[nr][nc] > k and cnt >= 2:
+                        print(nr, nc)
+                        edges.add((k, arr[nr][nc], cnt))
+                        break
+                    cnt += 1
+                    r, c = nr, nc
+    
+    
 
-                    for dr, dc in [[-1, 0], [0, 1], [1, 0], [0, -1]]:
-                        r, c = i, j
-                        while True:
-                            nr, nc = r + dr, c + dc
-                            cnt += 1
-                            if nr < 0 or nr >= N or nc < 0 or nc >= M or arr[nr][nc] == num:
-                                break
+def Find(x):
+    if x != p[x]:
+        p[x] = Find(p[x])
+    return p[x]
 
-                            if arr[nr][nc] > num and cnt >= 2:
-                                island.add((num, arr[nr][nc], cnt))
-                                break
+def Union(x, y):
+    px = Find(x)
+    py = Find(y)
 
-                            r, c = nr, nc
-
-    return island
-
+    if px != py:
+        if rank[px] < rank[py]:
+            p[px] = py
+        elif rank[px] > rank[py]:
+            p[py] = px
+        else:
+            p[px] = py
+            rank[py] += 1
 
 
 N, M = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
-num = 0  # 섬의 개수
+
+num = 0  # 섬 개수
+island = defaultdict(list)
+edges = set()
 FindIsland()
-print(Bridge())
+print(arr)
+Bridge()
+print(edges)
+p = [i for i in range(num+1)]
+rank = [0] * (num+1)
+ans = 0
+for s, e, w in edges:
+    if Find(s) != Find(e):
+        Union(s, e)
+        ans += w
 
-
-
+print(ans)
