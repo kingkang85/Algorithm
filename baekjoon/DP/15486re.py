@@ -1,4 +1,8 @@
 # 15486. 퇴사 2
+# 10:32 ~~
+import sys
+input = sys.stdin.readline
+
 N = int(input())
 sche = []
 for _ in range(N):
@@ -6,3 +10,7 @@ for _ in range(N):
     sche.append((T, P))
 
 dp = [0] * (N+1)
+
+
+
+    
