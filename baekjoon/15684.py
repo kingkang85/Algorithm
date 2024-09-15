@@ -23,7 +23,7 @@ for _ in range(M):
     a, b = map(int, input().split())
     arr[a-1][b-1] = (1, 1)
     arr[a-1][b] = (1, -1)
-
+ 
 # 사다리 후보군 뽑기..
 ladder_lst = []
 for i in range(H):
