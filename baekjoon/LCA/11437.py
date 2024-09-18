@@ -6,18 +6,23 @@
     - 부모가 같아질 때까지 거슬러 올라간다.
 '''
 import sys
-sys.setrecursionlimit(100000)
+from collections import deque
 input = sys.stdin.readline
 
 # 깊이 구하는 함수
-def dfs(root, depth):
-    visited[root] = 1
-    d[root] = depth
+def bfs(start):
+    q = deque([(start, 0)])
+    visited[start] = 1
+    d[start] = 0
 
-    for next in graph[root]:
-        if not visited[next]:
-            p[next] = root
-            dfs(next, depth + 1)
+    while q:
+        node, depth = q.popleft()
+        for next in graph[node]:
+            if not visited[next]:
+                p[next] = node
+                d[next] = depth + 1
+                visited[next] = 1
+                q.append((next, depth + 1))
 
 # 최소 공통 조상 찾는 함수
 def lca(v1, v2):
@@ -46,7 +51,7 @@ for _ in range(N-1):
 p = [0] * (N+1)
 d = [0] * (N+1)
 visited = [0] * (N+1)
-dfs(1, 0)
+bfs(1)
 
 M = int(input())
 for _ in range(M):
