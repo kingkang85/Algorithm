@@ -106,7 +106,3 @@ for score in range(20):
         
 Avg = score_sum/credit_sum
 print(Avg)
-        
-        
-    
-    
