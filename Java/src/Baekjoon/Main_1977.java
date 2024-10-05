@@ -1,3 +1,4 @@
+// 1977. 완전제곱수
 package Baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
