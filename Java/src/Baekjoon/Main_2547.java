@@ -18,7 +18,6 @@ public class Main_2547 {
                 BigInteger candy = new BigInteger(br.readLine());
                 candies = candies.add(candy);
             }
-
             // 총합이 학생 수로 나누어떨어지는지 확인
             BigInteger result = new BigInteger("0");
             result = candies.mod(BigInteger.valueOf(N));
