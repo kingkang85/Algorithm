@@ -1,3 +1,4 @@
+// 6609. 모기 곱셈
 package Baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
