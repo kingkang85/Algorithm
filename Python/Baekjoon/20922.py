@@ -4,9 +4,9 @@ import sys
 input = sys.stdin.readline
 
 def longest_subseq():
-    counts = defaultdict(int)
     left = 0
-    max_length = 0
+    counts = defaultdict(int)
+    maxL = 0
 
     for right in range(N):
         counts[seq[right]] += 1
@@ -17,11 +17,9 @@ def longest_subseq():
                 del counts[seq[left]]
             left += 1
         
-        max_length = max(max_length, right - left + 1)
-    
-    return max_length
+        maxL = max(maxL, right - left + 1)
+    return maxL
 
 N, K = map(int, input().split())
 seq = list(map(int, input().split()))
-
 print(longest_subseq())
