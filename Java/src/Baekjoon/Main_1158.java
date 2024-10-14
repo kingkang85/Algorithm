@@ -14,14 +14,18 @@ public class Main_1158 {
         int K = Integer.parseInt(input[1]);
 
         Queue<Integer> q = new LinkedList<>();
+        // Queue q = new LinkedList();
         for (int i = 1; i < N + 1; i++) {
             q.offer(i);
+            // q.add(i);
         }
 
         StringBuilder result = new StringBuilder("<");
         while (q.size() > 1) {
+            // q 앞에서 K - 1번 뽑아서 뒤에 붙이기
             for (int i = 0; i < K - 1; i++) {
                 q.offer(q.poll());
+                // q.offer(q.remove());
             }
             result.append(q.poll()).append(", ");
         }

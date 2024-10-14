@@ -14,14 +14,16 @@ public class Main_2547 {
             br.readLine();
             int N = Integer.parseInt(br.readLine());  // 학생 수
             BigInteger candies = BigInteger.ZERO;  // 캔디의 총합
+            // 캔디 총합 구하기
             for (int j = 0; j < N; j++) {
-                BigInteger candy = new BigInteger(br.readLine());
-                candies = candies.add(candy);
+                long candy = Long.parseLong(br.readLine());
+                candies = candies.add(BigInteger.valueOf(candy));
             }
             // 총합이 학생 수로 나누어떨어지는지 확인
-            BigInteger result = new BigInteger("0");
-            result = candies.mod(BigInteger.valueOf(N));
-            if (result.equals(BigInteger.ZERO)) {
+            int result = 0;
+            result = candies.mod(BigInteger.valueOf(N)).intValue();
+
+            if (result == 0) {
                 System.out.println("YES");
             } else {
                 System.out.println("NO");
