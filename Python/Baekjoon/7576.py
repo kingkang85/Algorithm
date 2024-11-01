@@ -3,6 +3,13 @@ from collections import deque
 import sys
 input = sys.stdin.readline
 
+def check():
+    for i in range(M):
+        for j in range(N):
+            if arr[i][j] == 0:
+                return False
+    return True
+
 def bfs(str, stc):
     q = deque([(str, stc)])
     visited[str][stc] = 1
@@ -16,9 +23,7 @@ def bfs(str, stc):
                 q.append((nr, nc))
                 visited[nr][nc] = 1
                 tomatoes.append((nr, nc))
-    
 
-                
 
 M, N = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
@@ -33,8 +38,12 @@ while True:
             if arr[i][j] == 1 and visited[i][j] == 0:
                 tomatoes.append((i, j))
                 bfs(i, j)
-    
+
     for r, c in tomatoes:
         arr[r][c] = 1
 
-# 쥐민! 토메이도 잘 익혀 먹어~
+    if check():
+        break
+    days += 1
+
+print(days)
