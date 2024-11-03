@@ -1,22 +1,9 @@
 # 11559. Puyo Puyo
-# 8:20
-'''
-1. 배열을 탐색하면서 .이 아닌 것을 찾는다.
-2. 해당 시작점의 문자와 같은 것이 아닐 때까지 탐색하면서 인덱스 추출
-    - 단 개수가 4개 이상이어야 함
-3. 추출된 인덱스들을 동시에 .으로 바꿈
-4. 배열 바꾸는 함수 쓰기
-5. 위 과정을 반복하며 카운트 세기
-
-배열 바꾸는 함수!! (열 탐색)
-- 밑에서부터 올라가면서 개수를 세며 .인 것을 확인
-    - .이 아닌 것을 만나면 해당 요소를 개수만큼 밑으로 내림.
-    - 다 .이면 pass
-'''
 from collections import deque
 import sys
 input = sys.stdin.readline
 
+# 중력 작용
 def change_field():
     for j in range(6):
         row = 11
@@ -26,7 +13,7 @@ def change_field():
                     field[row][j], field[i][j] = field[i][j], field[row][j]
                 row -= 1
 
-def bfs(str, stc, color):
+def bfs(str, stc, color):  # 시작 위치와 해당 색깔
     q = deque([(str, stc)])
     visited[str][stc] = 1
     chain = [(str, stc)]
@@ -39,30 +26,34 @@ def bfs(str, stc, color):
                 q.append((nr, nc))
                 chain.append((nr, nc))
                 visited[nr][nc] = 1
-        
+    
+    # 4개 이상 모일 경우
     if len(chain) >= 4:
         return chain
     
+    # 4개 미만은 False
     return False
 
 field = [list(input().strip()) for _ in range(12)]
 
-result = 0
+result = 0  # 연쇄 수
 while True:
     visited = [[0] * 6 for _ in range(12)]
     found = False
     for i in range(12):
         for j in range(6):
+            # 색깔 뿌요이고 방문 안 한 곳이라면 bfs 시작
             if field[i][j] != '.' and visited[i][j] == 0:
                 chain = bfs(i, j, field[i][j])
                 if chain:
-                    found = True
+                    found = True  # 연쇄가 일어나면 True
                     for r, c in chain:
                         field[r][c] = '.'
     
+    # 게임 종료
     if not found:
         break
-
+    
     change_field()
     result += 1
 
