@@ -1,56 +1,70 @@
 # 17135. 캐슬 디펜스
-'''
-먼저 시작점 3개를 찾는다!!
-1. 시작점이 1이면 카운트 하나 업
-2. bfs로 탐색하며 1을 만나면 카운트 하나 업
-3. 거리가 D-1이 되면 종료
-'''
-
-from collections import deque
-import sys
+import sys, copy
 input = sys.stdin.readline
 
 # 게임이 끝났는지 확인하는 함수
-def check():
+def check(arr):
     for i in range(N):
         for j in range(M):
             if arr[i][j] == 1:
                 return False
     return True
 
+# 적 이동 함수
+def change(arr):
+    for i in range(N-1, 0, -1):
+        arr[i][:] = arr[i-1][:]
+    arr[0][:] = [0] * M
 
+# 가장 가까운 적 찾는 함수
+def get_target(r, c, arr):
+    min_dist = D + 1
+    target = None
+
+    for i in range(N):
+        for j in range(M):
+            if arr[i][j] == 1:
+                dist = abs(r-i) + abs(c-j)
+                if dist <= D:
+                    # 가장 가까운 적 찾기
+                    if dist < min_dist:
+                        min_dist = dist
+                        target = (i, j)
+                    # 거리가 같은 경우 가장 왼쪽에 있는 적 찾기
+                    elif dist == min_dist and j < target[1]:
+                        target = (i, j)
+    
+    return target
+
+# 궁수 조합 & 게임 진행 함수
 def attack(lev, st):
     global maxCnt
     if lev == 3:
+        current_map = copy.deepcopy(arr) # 맵 복사
         cnt = 0
-        visited = [[0] * M for _ in range(N-1)] + [[1] * M]
-        q = deque()
-        for str, stc in starts:
-            q.append((str, stc, 0))
-
-            if arr[str][stc] == 1:
-                arr[str][stc] = 0
+        
+        # 적이 없을 때까지 게임 진행
+        while not check(current_map):
+            targets = set()
+            for col in starts:
+                target = get_target(N, col, current_map)
+                if target:
+                    targets.add(target)
+            
+            # 공격!!!
+            for tr, tc in targets:
+                current_map[tr][tc] = 0
                 cnt += 1
-
-        while q:
-            r, c, dist = q.popleft()
-
-            if dist == D-1:
-                break
-
-            for dr, dc in [[-1, 0], [0, 1], [0, -1]]:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < N and 0 <= nc < M and visited[nr][nc] == 0 and arr[nr][nc] == 1:
-                    q.append((nr, nc, dist + 1))
-                    visited[nr][nc] = 1
-                    cnt += 1
-
+            
+            # 공격 후 적 이동
+            change(current_map)
+        
         maxCnt = max(maxCnt, cnt)
         return
 
     for i in range(st, M):
         if not used[i]:
-            starts.append((N-1, i))
+            starts.append(i)
             used[i] = 1
             attack(lev+1, i+1)
             starts.pop()
