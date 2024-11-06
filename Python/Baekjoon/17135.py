@@ -10,9 +10,42 @@ from collections import deque
 import sys
 input = sys.stdin.readline
 
+# 게임이 끝났는지 확인하는 함수
+def check():
+    for i in range(N):
+        for j in range(M):
+            if arr[i][j] == 1:
+                return False
+    return True
+
+
 def attack(lev, st):
+    global maxCnt
     if lev == 3:
-        # 여기 bfs 채워라.
+        cnt = 0
+        visited = [[0] * M for _ in range(N-1)] + [[1] * M]
+        q = deque()
+        for str, stc in starts:
+            q.append((str, stc, 0))
+
+            if arr[str][stc] == 1:
+                arr[str][stc] = 0
+                cnt += 1
+
+        while q:
+            r, c, dist = q.popleft()
+
+            if dist == D-1:
+                break
+
+            for dr, dc in [[-1, 0], [0, 1], [0, -1]]:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < N and 0 <= nc < M and visited[nr][nc] == 0 and arr[nr][nc] == 1:
+                    q.append((nr, nc, dist + 1))
+                    visited[nr][nc] = 1
+                    cnt += 1
+
+        maxCnt = max(maxCnt, cnt)
         return
 
     for i in range(st, M):
@@ -28,4 +61,6 @@ N, M, D = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 starts = []
 used = [0] * M
+maxCnt = 0
 attack(0, 0)
+print(maxCnt)
