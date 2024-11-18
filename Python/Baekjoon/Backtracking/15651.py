@@ -1,17 +1,17 @@
-# 15650. N과 M (2)
+# 15651. N과 M (3)
 import sys
 input = sys.stdin.readline
 
-def comb(lev, st):
+def perm(lev):
     if lev == M:
         print(*path)
         return
 
-    for i in range(st, N+1):
+    for i in range(1, N+1):
         path.append(i)
-        comb(lev+1, i+1)
+        perm(lev+1)
         path.pop()
 
 N, M = map(int, input().split())
 path = []
-comb(0, 1)
+perm(0)
